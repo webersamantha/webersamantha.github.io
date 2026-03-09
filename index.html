@@ -8,6 +8,10 @@
       name="description"
       content="Samantha Weber | Innovating mental health with AI and digital health solutions."
     />
+    <meta
+      name="chat-api-url"
+      content="https://webersamantha-publications-chat.onrender.com/api/chat"
+    />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -23,6 +27,7 @@
       <nav>
         <a href="#about">About</a>
         <a href="#publications">Publications</a>
+        <a href="#chatbot">Chat</a>
         <a href="#projects">Projects</a>
         <a href="#cats">Cats</a>
         <a href="#contact">Contact</a>
@@ -115,6 +120,35 @@
         </div>
       </section>
 
+      <section id="chatbot" class="panel reveal">
+        <h2>Publications Chatbot</h2>
+        <p>
+          Ask questions about all publications in this website. Answers include
+          citations so you can verify every claim.
+        </p>
+        <p class="chat-status" id="chat-status">
+          Configure the backend API URL to activate chat.
+        </p>
+        <div class="chat-shell">
+          <div class="chat-messages" id="chat-messages" aria-live="polite"></div>
+          <form id="chat-form" class="chat-form">
+            <label for="chat-input" class="sr-only">Ask a question</label>
+            <textarea
+              id="chat-input"
+              name="chat-input"
+              rows="3"
+              maxlength="1200"
+              placeholder="Example: What methods did Samantha use to evaluate depressive symptoms?"
+              required
+            ></textarea>
+            <div class="chat-actions">
+              <button class="btn btn-primary" type="submit">Ask chatbot</button>
+              <button class="btn btn-ghost" type="button" id="chat-clear">Clear</button>
+            </div>
+          </form>
+        </div>
+      </section>
+
       <section id="projects" class="panel reveal">
         <h2>Featured Projects</h2>
         <div class="project-grid">
@@ -187,5 +221,6 @@
     </footer>
 
     <script src="script.js"></script>
+    <script src="assistant.js"></script>
   </body>
 </html>
