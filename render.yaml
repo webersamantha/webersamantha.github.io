@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: webersamantha-publications-chat
+    env: node
+    rootDir: rag-backend
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: OPENAI_MODEL
+        value: gpt-4.1-mini
+      - key: CORPUS_PATH
+        value: ./data/corpus.json
+      - key: ALLOWED_ORIGINS
+        value: https://webersamantha.github.io
+      - key: MIN_RETRIEVAL_SCORE
+        value: "2.1"
+      - key: MIN_QUERY_TOKEN_MATCHES
+        value: "2"
