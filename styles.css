@@ -179,6 +179,32 @@ h2 {
   font-weight: 700;
 }
 
+.cat-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.9rem;
+}
+
+.cat-card {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1rem;
+}
+
+.cat-photo {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: 10px;
+  margin-bottom: 0.8rem;
+  border: 1px dashed rgba(31, 41, 51, 0.3);
+  background: linear-gradient(135deg, #f9efe0 0%, #f0d6b6 100%);
+  color: rgba(31, 41, 51, 0.65);
+  font-weight: 700;
+  display: grid;
+  place-items: center;
+}
+
 footer {
   max-width: 980px;
   margin: 0 auto;
@@ -199,6 +225,10 @@ footer {
 
 @media (max-width: 800px) {
   .project-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cat-grid {
     grid-template-columns: 1fr;
   }
 
