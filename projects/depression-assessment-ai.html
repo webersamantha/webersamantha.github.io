@@ -77,9 +77,10 @@
               reliable symptom-level scores. We used a lightweight BERT-based
               setup by design, because hospital deployment requires scalable
               models with practical compute and maintenance needs. The workflow
-              combined real transcript data with synthetic augmentation,
-              fine-tuned the scoring model per MADRS item, and evaluated strict
-              and flexible accuracy alongside MAE.
+              used a balanced fine-tuning cohort of 126 interviews (50:50 real
+              transcripts and synthetic interviews), fine-tuned scoring per MADRS
+              item, and evaluated strict accuracy, flexible accuracy (+/-1 score),
+              and MAE with learning-curve checks.
             </p>
 
             <figure class="project-figure embedded-figure">
@@ -100,12 +101,22 @@
                 from structured interview text.
               </li>
               <li>
-                <strong>Data:</strong> 30 clinically rated transcripts for external validation,
-                plus synthetic augmentation during model development.
+                <strong>Fine-tuning cohort:</strong> 126 interviews total, with
+                an explicit 50:50 balance between real transcripts and synthetic
+                interview data.
+              </li>
+              <li>
+                <strong>External validation cohort:</strong> 30 new subjects,
+                independently rated by 8 clinicians.
               </li>
               <li>
                 <strong>Key validation:</strong> 8 clinicians rated 30 transcripts; mean
                 clinician-clinician ICC = 0.92, model-clinician mean ICC = 0.78.
+              </li>
+              <li>
+                <strong>Evaluation protocol:</strong> strict accuracy, flexible
+                accuracy (+/-1), MAE, and learning-curve analysis to check data
+                sufficiency under psychiatric variability.
               </li>
               <li>
                 <strong>Performance:</strong> up to 88% item accuracy, MAE as low as 0.7.
@@ -146,7 +157,11 @@
               with patients and then applies symptom scoring through the
               separated scoring model. Project-wise, this phase added operational
               goals: feasibility in real care settings, user acceptance, and
-              clinician-facing quality validation.
+              clinician-facing quality validation. The core rationale is
+              workflow standardization: if symptom interviews become more
+              consistent across time and raters, clinical teams gain better
+              longitudinal comparability, clearer handovers, and more efficient
+              pre-visit assessment.
             </p>
 
             <figure class="project-figure embedded-figure">
@@ -188,9 +203,9 @@
                 <span class="metric-note">Correlation with clinician MADRS</span>
               </div>
               <div class="metric-card">
-                <span class="metric-label">MADRS-Chat</span>
-                <span class="metric-value">r = 0.37</span>
-                <span class="metric-note">Correlation with self-rated MADRS</span>
+                <span class="metric-label">Bias calibration</span>
+                <span class="metric-value">+12.3 -> +3.53</span>
+                <span class="metric-note">Mean bias vs clinician MADRS after correction</span>
               </div>
               <div class="metric-card">
                 <span class="metric-label">Acceptance</span>
@@ -199,8 +214,8 @@
               </div>
               <div class="metric-card">
                 <span class="metric-label">Clinician quality</span>
-                <span class="metric-value">5.7-5.9/7</span>
-                <span class="metric-note">Appropriateness, factuality, empathy</span>
+                <span class="metric-value">90-94%</span>
+                <span class="metric-note">Ratings in the agree range across appropriateness, factuality, empathy</span>
               </div>
             </div>
 
@@ -211,9 +226,13 @@
                 loading="lazy"
               />
               <figcaption>
-                Clinical validity summary: meaningful agreement with human
-                ratings, with score-level inflation addressed via post-hoc
-                calibration.
+                <strong>Figure legend (adapted):</strong> (A) Clinician-rated
+                quality of MADRS-Chat responses across appropriateness, factual
+                accuracy, and empathy. (B) Pairwise agreement plots between
+                MADRS-Chat and human ratings, shown before and after bias
+                correction. (C) Item-level mean score profiles for self-rated,
+                clinician-rated, MADRS-Chat, and bias-corrected MADRS-Chat,
+                demonstrating alignment improvement after calibration.
               </figcaption>
             </figure>
 
