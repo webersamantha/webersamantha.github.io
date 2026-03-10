@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MADRS-Chat: AI-Assisted Depression Assessment | Samantha Weber</title>
+    <meta
+      name="description"
+      content="Project page for MADRS-Chat, an AI-assisted framework for structured depression assessment."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=Manrope:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body class="project-page-body">
+    <div class="ambient"></div>
+
+    <header class="site-header">
+      <a class="brand" href="../index.html#home">SW</a>
+      <nav>
+        <a href="../index.html#projects">All Projects</a>
+        <a href="../index.html#publications">Publications</a>
+        <a href="../index.html#contact">Contact</a>
+      </nav>
+    </header>
+
+    <main class="project-main">
+      <article class="panel project-detail">
+        <p class="eyebrow">Featured Project 01</p>
+        <h1>MADRS-Chat: AI-Assisted Depression Assessment</h1>
+        <p class="lead">
+          Building from structured scoring to real-time clinical dialogue:
+          MADRS-BERT established reliable symptom scoring, then MADRS-Chat moved
+          the full interview process into a clinically constrained conversational
+          workflow.
+        </p>
+
+        <div class="project-meta">
+          <span class="project-pill">Status: Active Project</span>
+          <span class="project-pill">Domain: Clinical AI</span>
+          <span class="project-pill">Focus: MADRS-Based Assessment</span>
+          <span class="project-pill">Setting: Psychiatric Hospital Workflow</span>
+        </div>
+
+        <nav class="project-anchors" aria-label="Project sections">
+          <a href="#problem">Clinical Problem</a>
+          <a href="#madrs">What MADRS Is</a>
+          <a href="#madrs-bert">MADRS-BERT</a>
+          <a href="#madrs-chat">MADRS-Chat</a>
+          <a href="#results">Results</a>
+          <a href="#resources">Resources</a>
+        </nav>
+
+        <section id="problem" class="story-grid">
+          <article>
+            <h2>1. Clinical Problem</h2>
+            <p>
+              In routine psychiatric care, depressive symptoms are often
+              under-documented due to time pressure and non-standardized
+              interviews. This can reduce comparability across visits and make
+              symptom trajectories harder to track.
+            </p>
+          </article>
+          <article>
+            <h2>2. Why This Is a Good AI Target</h2>
+            <p>
+              MADRS interviews are natural language based but highly structured.
+              That makes them well suited for AI-supported assessment. The goal
+              here is assessment support, not autonomous diagnosis or therapy,
+              which keeps clinical boundaries clear while improving efficiency.
+            </p>
+          </article>
+        </section>
+
+        <section id="madrs" class="story-grid">
+          <article>
+            <h2>3. What MADRS Is</h2>
+            <p>
+              The Montgomery-Asberg Depression Rating Scale (MADRS) is a
+              clinician-rated interview for depressive symptom severity. It
+              covers nine symptom domains (for example sadness, sleep,
+              concentration, lassitude, and suicidal ideation), each scored
+              from 0-6 to produce a total severity profile.
+            </p>
+          </article>
+        </section>
+
+        <section id="madrs-bert" class="story-grid">
+          <article>
+            <h2>4. Phase I: MADRS-BERT (Understanding)</h2>
+            <p>
+              First, we developed MADRS-BERT to assign item-level scores from
+              transcript text. We intentionally used a lightweight BERT approach
+              because hospital deployment needs models that are resource-aware,
+              scalable, and easier to operationalize in real-world workflows.
+            </p>
+          </article>
+          <article>
+            <h2>5. Phase I Evaluation Highlights</h2>
+            <p>
+              In the MADRS-BERT work, model performance reached up to 88%
+              accuracy with mean absolute error (MAE) as low as 0.7 on item
+              prediction. In external validation, 8 clinicians rated 30
+              transcripts: clinician-clinician agreement was high (mean
+              ICC=0.92), and MADRS-BERT remained closely aligned (mean ICC=0.78).
+            </p>
+          </article>
+        </section>
+
+        <section id="madrs-chat" class="story-grid">
+          <article>
+            <h2>6. From Understanding to Dialogue: MADRS-Chat</h2>
+            <p>
+              Scoring transcripts post-hoc is useful, but interviews themselves
+              still consume clinician time. So the next step was MADRS-Chat: a
+              structured conversational agent that conducts the interview and
+              then uses the scoring model for symptom-level outputs.
+            </p>
+          </article>
+          <article>
+            <h2>7. Clinical Design Choice</h2>
+            <p>
+              The architecture separates conversation handling from scoring:
+              Llama-3.1-8B guides dialogue, while MADRS-BERT handles symptom
+              scoring. This hybrid design improves controllability and makes
+              bias measurement/calibration explicit.
+            </p>
+
+            <aside class="safety-box" aria-label="Clinical safety boundaries">
+              <h3>Clinical Safety Boundaries</h3>
+              <ul class="safety-list">
+                <li>
+                  Use case: structured symptom assessment and monitoring support.
+                </li>
+                <li>
+                  Not for: standalone diagnosis, treatment decisions, or emergency triage.
+                </li>
+                <li>
+                  Human oversight: clinician review is required before clinical action.
+                </li>
+                <li>
+                  Risk handling: suspected acute suicidality requires immediate escalation to in-person protocol.
+                </li>
+                <li>
+                  Data governance: secure infrastructure, least-privilege access, and auditability.
+                </li>
+                <li>
+                  Model constraints: conversation and scoring are separated and version-tracked.
+                </li>
+                <li>
+                  Known limitation: conversational format can shift severity levels; calibration and periodic re-validation are required.
+                </li>
+              </ul>
+            </aside>
+          </article>
+        </section>
+
+        <section id="results" class="story-grid">
+          <article>
+            <h2>8. Results Snapshot</h2>
+            <p>
+              In the feasibility study at the Psychiatric University Hospital,
+              MADRS-Chat showed meaningful agreement with human ratings and high
+              user acceptance. The conversational format increased openness, but
+              also introduced systematic score inflation, which was reduced via
+              lightweight post-hoc calibration.
+            </p>
+
+            <div class="metric-grid">
+              <div class="metric-card">
+                <span class="metric-label">MADRS-BERT</span>
+                <span class="metric-value">88%</span>
+                <span class="metric-note">Peak item-level accuracy</span>
+              </div>
+              <div class="metric-card">
+                <span class="metric-label">MADRS-BERT</span>
+                <span class="metric-value">MAE 0.7</span>
+                <span class="metric-note">Lowest reported item-level error</span>
+              </div>
+              <div class="metric-card">
+                <span class="metric-label">MADRS-Chat</span>
+                <span class="metric-value">r = 0.76</span>
+                <span class="metric-note">Correlation with clinician MADRS</span>
+              </div>
+              <div class="metric-card">
+                <span class="metric-label">Acceptance</span>
+                <span class="metric-value">83%</span>
+                <span class="metric-note">Patients: ease of use agreement</span>
+              </div>
+            </div>
+          </article>
+
+          <article>
+            <h2>9. Figures</h2>
+            <div class="project-figure-grid">
+              <figure class="project-figure">
+                <img
+                  src="depression-assessment/images/madrs-bert-figure-1.jpg"
+                  alt="Pipeline diagram showing MADRS-BERT data engineering, training, and evaluation flow."
+                  loading="lazy"
+                />
+                <figcaption>
+                  MADRS-BERT pipeline: data engineering, training, and
+                  evaluation from interview text to symptom-level scoring.
+                </figcaption>
+              </figure>
+
+              <figure class="project-figure">
+                <img
+                  src="depression-assessment/images/madrs-bert-figure-5.jpg"
+                  alt="Learning curve plot showing flexible accuracy by fraction of dataset used for each MADRS item."
+                  loading="lazy"
+                />
+                <figcaption>
+                  Learning-curve analysis: flexible accuracy increases with data
+                  fraction and stabilizes across symptom domains.
+                </figcaption>
+              </figure>
+
+              <figure class="project-figure">
+                <img
+                  src="depression-assessment/images/madrs-chat-figure-2.jpg"
+                  alt="Likert distribution charts for MADRS-Chat patient and clinician acceptability and satisfaction."
+                  loading="lazy"
+                />
+                <figcaption>
+                  Feasibility and acceptability: patients and clinicians
+                  reported positive usability and alliance indicators.
+                </figcaption>
+              </figure>
+
+              <figure class="project-figure">
+                <img
+                  src="depression-assessment/images/madrs-chat-figure-3.jpg"
+                  alt="Agreement and validity plots comparing MADRS-Chat against clinician and self-ratings."
+                  loading="lazy"
+                />
+                <figcaption>
+                  Clinical validity: MADRS-Chat aligned with clinician/self
+                  ratings while requiring bias calibration for absolute severity.
+                </figcaption>
+              </figure>
+            </div>
+          </article>
+        </section>
+
+        <section id="resources" class="story-grid">
+          <article>
+            <h2>10. Resources</h2>
+            <ul class="project-resource-list">
+              <li>
+                <a
+                  href="../publications/depression-evaluation-llm-2025.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Paper: Using a fine-tuned LLM for symptom-based depression evaluation (2025)
+                </a>
+              </li>
+              <li>
+                <a
+                  href="../publications/madrs-chat-ssrn-2026.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Paper: MADRS-Chat feasibility, acceptability, and bias-aware validation (2026 preprint)
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://github.com/webersamantha/MADRS-BERT"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  GitHub: MADRS-BERT repository
+                </a>
+              </li>
+            </ul>
+          </article>
+        </section>
+      </article>
+    </main>
+
+    <footer>
+      <small>&copy; 2026 Samantha Weber</small>
+    </footer>
+  </body>
+</html>
