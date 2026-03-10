@@ -84,6 +84,26 @@ if (!chatStatus || !chatMessages || !chatForm || !chatInput || !chatClear) {
       "Chatbot is currently offline. Add your backend URL in the chat-api-url meta tag.";
   }
 
+  chatInput.addEventListener("keydown", (event) => {
+    const isPlainEnter =
+      event.key === "Enter" &&
+      !event.shiftKey &&
+      !event.ctrlKey &&
+      !event.metaKey &&
+      !event.altKey;
+
+    if (!isPlainEnter || event.isComposing) {
+      return;
+    }
+
+    event.preventDefault();
+    if (typeof chatForm.requestSubmit === "function") {
+      chatForm.requestSubmit();
+    } else {
+      chatForm.dispatchEvent(new Event("submit", { bubbles: true, cancelable: true }));
+    }
+  });
+
   chatForm.addEventListener("submit", async (event) => {
     event.preventDefault();
 
