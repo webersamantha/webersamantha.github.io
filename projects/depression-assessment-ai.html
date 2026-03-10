@@ -47,88 +47,175 @@
         </div>
 
         <nav class="project-anchors" aria-label="Project sections">
-          <a href="#problem">Clinical Problem</a>
-          <a href="#madrs">What MADRS Is</a>
-          <a href="#madrs-bert">MADRS-BERT</a>
-          <a href="#madrs-chat">MADRS-Chat</a>
-          <a href="#results">Results</a>
+          <a href="#intro">Intro</a>
+          <a href="#phase1">Phase I</a>
+          <a href="#phase2">Phase II</a>
           <a href="#resources">Resources</a>
         </nav>
 
-        <section id="problem" class="story-grid">
+        <section id="intro" class="story-grid">
           <article>
-            <h2>1. Clinical Problem</h2>
             <p>
-              In routine psychiatric care, depressive symptoms are often
-              under-documented due to time pressure and non-standardized
-              interviews. This can reduce comparability across visits and make
-              symptom trajectories harder to track.
-            </p>
-          </article>
-          <article>
-            <h2>2. Why This Is a Good AI Target</h2>
-            <p>
-              MADRS interviews are natural language based but highly structured.
-              That makes them well suited for AI-supported assessment. The goal
-              here is assessment support, not autonomous diagnosis or therapy,
-              which keeps clinical boundaries clear while improving efficiency.
+              Depressive symptoms are often not documented with enough depth or
+              standardization in routine care because time is limited and
+              interview quality varies across settings. MADRS (Montgomery-Asberg
+              Depression Rating Scale) provides a structured clinician interview
+              for nine symptom domains scored 0-6, but it remains time-intensive.
+              Because MADRS is both language-based and tightly structured, it is
+              a strong candidate for AI-assisted assessment support with clear
+              boundaries: improve standardization and workflow efficiency without
+              replacing clinical diagnosis or treatment decisions.
             </p>
           </article>
         </section>
 
-        <section id="madrs" class="story-grid">
+        <section id="phase1" class="story-grid">
           <article>
-            <h2>3. What MADRS Is</h2>
+            <h2>2. Phase I: MADRS-BERT - Teaching AI to Understand Clinical Symptom Presentation</h2>
             <p>
-              The Montgomery-Asberg Depression Rating Scale (MADRS) is a
-              clinician-rated interview for depressive symptom severity. It
-              covers nine symptom domains (for example sadness, sleep,
-              concentration, lassitude, and suicidal ideation), each scored
-              from 0-6 to produce a total severity profile.
+              Phase I focused on translating structured interview language into
+              reliable symptom-level scores. We used a lightweight BERT-based
+              setup by design, because hospital deployment requires scalable
+              models with practical compute and maintenance needs. The workflow
+              combined real transcript data with synthetic augmentation,
+              fine-tuned the scoring model per MADRS item, and evaluated strict
+              and flexible accuracy alongside MAE.
             </p>
+
+            <figure class="project-figure embedded-figure">
+              <img
+                src="depression-assessment/images/madrs-bert-figure-1.jpg"
+                alt="MADRS-BERT end-to-end workflow showing data engineering, model training, and evaluation."
+                loading="lazy"
+              />
+              <figcaption>
+                End-to-end MADRS-BERT workflow: data engineering, model
+                training, and evaluation.
+              </figcaption>
+            </figure>
+
+            <ul class="phase-list">
+              <li>
+                <strong>Objective:</strong> clinically interpretable item-level symptom scoring
+                from structured interview text.
+              </li>
+              <li>
+                <strong>Data:</strong> 30 clinically rated transcripts for external validation,
+                plus synthetic augmentation during model development.
+              </li>
+              <li>
+                <strong>Key validation:</strong> 8 clinicians rated 30 transcripts; mean
+                clinician-clinician ICC = 0.92, model-clinician mean ICC = 0.78.
+              </li>
+              <li>
+                <strong>Performance:</strong> up to 88% item accuracy, MAE as low as 0.7.
+              </li>
+            </ul>
+
+            <div class="metric-grid">
+              <div class="metric-card">
+                <span class="metric-label">MADRS-BERT</span>
+                <span class="metric-value">88%</span>
+                <span class="metric-note">Peak item-level accuracy</span>
+              </div>
+              <div class="metric-card">
+                <span class="metric-label">MADRS-BERT</span>
+                <span class="metric-value">MAE 0.7</span>
+                <span class="metric-note">Lowest reported item-level error</span>
+              </div>
+              <div class="metric-card">
+                <span class="metric-label">Reliability</span>
+                <span class="metric-value">ICC 0.92</span>
+                <span class="metric-note">Clinician-clinician agreement</span>
+              </div>
+              <div class="metric-card">
+                <span class="metric-label">Alignment</span>
+                <span class="metric-value">ICC 0.78</span>
+                <span class="metric-note">Model-clinician agreement</span>
+              </div>
+            </div>
           </article>
         </section>
 
-        <section id="madrs-bert" class="story-grid">
+        <section id="phase2" class="story-grid">
           <article>
-            <h2>4. Phase I: MADRS-BERT (Understanding)</h2>
+            <h2>3. Phase II: MADRS-Chat - From Understanding to Dialogue</h2>
             <p>
-              First, we developed MADRS-BERT to assign item-level scores from
-              transcript text. We intentionally used a lightweight BERT approach
-              because hospital deployment needs models that are resource-aware,
-              scalable, and easier to operationalize in real-world workflows.
+              Phase II moved from post-hoc scoring to end-to-end interview
+              delivery. MADRS-Chat conducts the structured assessment directly
+              with patients and then applies symptom scoring through the
+              separated scoring model. Project-wise, this phase added operational
+              goals: feasibility in real care settings, user acceptance, and
+              clinician-facing quality validation.
             </p>
-          </article>
-          <article>
-            <h2>5. Phase I Evaluation Highlights</h2>
-            <p>
-              In the MADRS-BERT work, model performance reached up to 88%
-              accuracy with mean absolute error (MAE) as low as 0.7 on item
-              prediction. In external validation, 8 clinicians rated 30
-              transcripts: clinician-clinician agreement was high (mean
-              ICC=0.92), and MADRS-BERT remained closely aligned (mean ICC=0.78).
-            </p>
-          </article>
-        </section>
 
-        <section id="madrs-chat" class="story-grid">
-          <article>
-            <h2>6. From Understanding to Dialogue: MADRS-Chat</h2>
-            <p>
-              Scoring transcripts post-hoc is useful, but interviews themselves
-              still consume clinician time. So the next step was MADRS-Chat: a
-              structured conversational agent that conducts the interview and
-              then uses the scoring model for symptom-level outputs.
-            </p>
-          </article>
-          <article>
-            <h2>7. Clinical Design Choice</h2>
-            <p>
-              The architecture separates conversation handling from scoring:
-              Llama-3.1-8B guides dialogue, while MADRS-BERT handles symptom
-              scoring. This hybrid design improves controllability and makes
-              bias measurement/calibration explicit.
-            </p>
+            <figure class="project-figure embedded-figure">
+              <img
+                src="depression-assessment/images/madrs-chat-figure-4.jpg"
+                alt="MADRS-Chat study design showing patient interaction and dual evaluation by patients and clinicians."
+                loading="lazy"
+              />
+              <figcaption>
+                MADRS-Chat study design: patients complete the structured
+                interview, while both patients and clinicians evaluate usefulness
+                and professional quality.
+              </figcaption>
+            </figure>
+
+            <ul class="phase-list">
+              <li>
+                <strong>Stakeholders:</strong> patients (acceptability/usability) and clinicians
+                (professional quality, factuality, empathy, usefulness).
+              </li>
+              <li>
+                <strong>Architecture:</strong> conversational model (Llama-3.1-8B) separated
+                from symptom scoring (MADRS-BERT) for controllability.
+              </li>
+              <li>
+                <strong>Validation:</strong> agreement with clinician and self-rated MADRS plus
+                bias-aware calibration.
+              </li>
+              <li>
+                <strong>Operational output:</strong> feasible deployment pathway for
+                assessment/monitoring support in psychiatric workflow.
+              </li>
+            </ul>
+
+            <div class="metric-grid">
+              <div class="metric-card">
+                <span class="metric-label">MADRS-Chat</span>
+                <span class="metric-value">r = 0.76</span>
+                <span class="metric-note">Correlation with clinician MADRS</span>
+              </div>
+              <div class="metric-card">
+                <span class="metric-label">MADRS-Chat</span>
+                <span class="metric-value">r = 0.37</span>
+                <span class="metric-note">Correlation with self-rated MADRS</span>
+              </div>
+              <div class="metric-card">
+                <span class="metric-label">Acceptance</span>
+                <span class="metric-value">83%</span>
+                <span class="metric-note">Patients: ease-of-use agreement</span>
+              </div>
+              <div class="metric-card">
+                <span class="metric-label">Clinician quality</span>
+                <span class="metric-value">5.7-5.9/7</span>
+                <span class="metric-note">Appropriateness, factuality, empathy</span>
+              </div>
+            </div>
+
+            <figure class="project-figure embedded-figure">
+              <img
+                src="depression-assessment/images/madrs-chat-figure-3.jpg"
+                alt="MADRS-Chat clinical validity plots comparing chatbot scores with clinician and self-ratings."
+                loading="lazy"
+              />
+              <figcaption>
+                Clinical validity summary: meaningful agreement with human
+                ratings, with score-level inflation addressed via post-hoc
+                calibration.
+              </figcaption>
+            </figure>
 
             <aside class="safety-box" aria-label="Clinical safety boundaries">
               <h3>Clinical Safety Boundaries</h3>
@@ -159,98 +246,9 @@
           </article>
         </section>
 
-        <section id="results" class="story-grid">
-          <article>
-            <h2>8. Results Snapshot</h2>
-            <p>
-              In the feasibility study at the Psychiatric University Hospital,
-              MADRS-Chat showed meaningful agreement with human ratings and high
-              user acceptance. The conversational format increased openness, but
-              also introduced systematic score inflation, which was reduced via
-              lightweight post-hoc calibration.
-            </p>
-
-            <div class="metric-grid">
-              <div class="metric-card">
-                <span class="metric-label">MADRS-BERT</span>
-                <span class="metric-value">88%</span>
-                <span class="metric-note">Peak item-level accuracy</span>
-              </div>
-              <div class="metric-card">
-                <span class="metric-label">MADRS-BERT</span>
-                <span class="metric-value">MAE 0.7</span>
-                <span class="metric-note">Lowest reported item-level error</span>
-              </div>
-              <div class="metric-card">
-                <span class="metric-label">MADRS-Chat</span>
-                <span class="metric-value">r = 0.76</span>
-                <span class="metric-note">Correlation with clinician MADRS</span>
-              </div>
-              <div class="metric-card">
-                <span class="metric-label">Acceptance</span>
-                <span class="metric-value">83%</span>
-                <span class="metric-note">Patients: ease of use agreement</span>
-              </div>
-            </div>
-          </article>
-
-          <article>
-            <h2>9. Figures</h2>
-            <div class="project-figure-grid">
-              <figure class="project-figure">
-                <img
-                  src="depression-assessment/images/madrs-bert-figure-1.jpg"
-                  alt="Pipeline diagram showing MADRS-BERT data engineering, training, and evaluation flow."
-                  loading="lazy"
-                />
-                <figcaption>
-                  MADRS-BERT pipeline: data engineering, training, and
-                  evaluation from interview text to symptom-level scoring.
-                </figcaption>
-              </figure>
-
-              <figure class="project-figure">
-                <img
-                  src="depression-assessment/images/madrs-bert-figure-5.jpg"
-                  alt="Learning curve plot showing flexible accuracy by fraction of dataset used for each MADRS item."
-                  loading="lazy"
-                />
-                <figcaption>
-                  Learning-curve analysis: flexible accuracy increases with data
-                  fraction and stabilizes across symptom domains.
-                </figcaption>
-              </figure>
-
-              <figure class="project-figure">
-                <img
-                  src="depression-assessment/images/madrs-chat-figure-2.jpg"
-                  alt="Likert distribution charts for MADRS-Chat patient and clinician acceptability and satisfaction."
-                  loading="lazy"
-                />
-                <figcaption>
-                  Feasibility and acceptability: patients and clinicians
-                  reported positive usability and alliance indicators.
-                </figcaption>
-              </figure>
-
-              <figure class="project-figure">
-                <img
-                  src="depression-assessment/images/madrs-chat-figure-3.jpg"
-                  alt="Agreement and validity plots comparing MADRS-Chat against clinician and self-ratings."
-                  loading="lazy"
-                />
-                <figcaption>
-                  Clinical validity: MADRS-Chat aligned with clinician/self
-                  ratings while requiring bias calibration for absolute severity.
-                </figcaption>
-              </figure>
-            </div>
-          </article>
-        </section>
-
         <section id="resources" class="story-grid">
           <article>
-            <h2>10. Resources</h2>
+            <h2>4. Resources</h2>
             <ul class="project-resource-list">
               <li>
                 <a
