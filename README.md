@@ -1,47 +1,46 @@
-# Samantha Website (GitHub Pages)
+# Samantha Weber Website
 
-This is a static site ready for GitHub Pages.
+Portfolio website with:
+- Static frontend (GitHub Pages)
+- Publications chatbot (RAG backend over local PDF corpus)
+- Project case-study pages
 
-## Local preview
+## Repository Structure
 
-Open `index.html` directly, or run a simple server:
+```text
+website/
+  index.html
+  styles.css
+  script.js
+  assistant.js
+  projects/
+  publications/
+  rag-backend/
+  render.yaml
+```
+
+## Frontend (Local Development)
 
 ```bash
 cd website
 python3 -m http.server 8080
 ```
 
-Then open `http://localhost:8080`.
+Open `http://localhost:8080`.
 
-## Publish on GitHub Pages
+## Publications Chatbot
 
-1. Create a GitHub repo.
-   - For a personal root site: `yourusername.github.io`
-   - For a project site: any repo name, e.g. `portfolio`
-2. Push this folder's contents to the repo root.
-3. In GitHub: `Settings` -> `Pages`
-4. Under **Build and deployment**:
-   - Source: `Deploy from a branch`
-   - Branch: `main` and folder `/ (root)`
-5. Save.
+The chat UI is embedded in the frontend and calls the backend API configured in:
 
-Your site URL will be:
-- Root site: `https://yourusername.github.io`
-- Project site: `https://yourusername.github.io/reponame`
+```html
+<meta name="chat-api-url" content="https://.../api/chat" />
+```
 
-## Personalize
+Current production endpoint:
 
-Update these placeholders in `index.html`:
-- `samantha@example.com`
-- `https://github.com/yourusername`
-- `https://www.linkedin.com/in/yourprofile`
-- Project card links and descriptions
+`https://webersamantha-publications-chat.onrender.com/api/chat`
 
-## Publications Chatbot (RAG)
-
-The website now includes a `Chat` section that calls a backend API.
-
-1. Build the publication corpus:
+### Build Corpus
 
 ```bash
 cd rag-backend
@@ -51,38 +50,53 @@ pip install -r tools/requirements.txt
 python tools/build_corpus.py
 ```
 
-2. Start backend locally:
+Generates: `rag-backend/data/corpus.json`
+
+### Run Backend Locally
 
 ```bash
 cd rag-backend
 npm install
 cp .env.example .env
-# add OPENAI_API_KEY in .env
+# set OPENAI_API_KEY in .env
 npm run dev
 ```
 
-3. Point the website to the backend by editing this in `index.html`:
+API endpoints:
+- `GET /api/health`
+- `POST /api/chat`
 
-```html
-<meta name="chat-api-url" content="http://localhost:8787/api/chat" />
-```
+### Chatbot Scope
 
-4. For production:
-- Deploy `rag-backend` to a Node host.
-- Set `ALLOWED_ORIGINS=https://webersamantha.github.io`.
-- Change the same meta tag to your deployed backend URL.
+The chatbot is retrieval-grounded and intentionally constrained:
+- Answers are based only on the uploaded publication corpus.
+- If evidence is insufficient, it returns a scope message instead of guessing.
+- Answers include citations when relevant evidence is found.
 
-## Render Deployment (No Code Editing)
+## Deployment
 
-This repo includes `render.yaml` so deployment is mostly click-through.
+### Frontend (GitHub Pages)
 
-1. Push latest code to GitHub.
-2. In Render: `New` -> `Blueprint` -> select this GitHub repo.
-3. Confirm service name is `webersamantha-publications-chat` (or tell Codex the new URL if Render changes it).
-4. In Render service settings, add secret env var:
-   - `OPENAI_API_KEY` = your API key
-5. Click deploy.
+Deploy from `main` branch, folder `/ (root)`.
 
-The frontend is already configured to call:
+### Backend (Render)
 
-`https://webersamantha-publications-chat.onrender.com/api/chat`
+This repo includes `render.yaml` for Render Blueprint deployment.
+
+Required environment variables:
+- `OPENAI_API_KEY`
+- `ALLOWED_ORIGINS` (include `https://webersamantha.github.io`)
+
+Optional:
+- `OPENAI_MODEL` (default: `gpt-4.1-mini`)
+- `CORPUS_PATH` (default: `./data/corpus.json`)
+
+## Maintenance
+
+When publication PDFs are added or changed:
+1. Rebuild corpus: `python tools/build_corpus.py`
+2. Redeploy backend
+
+If backend URL changes:
+1. Update `chat-api-url` meta tag in `index.html`
+2. Deploy frontend
