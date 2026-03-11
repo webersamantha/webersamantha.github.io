@@ -23,6 +23,8 @@ const PORT = Number(process.env.PORT || 8787);
 const MODEL = process.env.OPENAI_MODEL || "gpt-4.1-mini";
 const MIN_RETRIEVAL_SCORE = Number(process.env.MIN_RETRIEVAL_SCORE || 2.1);
 const MIN_QUERY_TOKEN_MATCHES = Number(process.env.MIN_QUERY_TOKEN_MATCHES || 2);
+const OUT_OF_SCOPE_ANSWER =
+  "I can only answer using information from Samantha's uploaded publication papers. I could not find enough relevant evidence for that question in those papers.";
 const CORPUS_PATH = path.resolve(
   __dirname,
   process.env.CORPUS_PATH || "./data/corpus.json"
@@ -70,6 +72,25 @@ const openai = process.env.OPENAI_API_KEY
   ? new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
   : null;
 
+function looksLikeInsufficientContextAnswer(answer) {
+  if (!answer) {
+    return false;
+  }
+
+  const normalized = answer.toLowerCase();
+  const signals = [
+    "retrieved context",
+    "context does not provide",
+    "context is insufficient",
+    "insufficient context",
+    "therefore, i don't know",
+    "therefore i don't know",
+    "i do not know"
+  ];
+
+  return signals.some((signal) => normalized.includes(signal));
+}
+
 app.get("/api/health", (_req, res) => {
   res.json({
     status: "ok",
@@ -98,8 +119,7 @@ app.post("/api/chat", async (req, res) => {
 
   if (isWeakRetrieval) {
     res.json({
-      answer:
-        "I can only answer from Samantha's uploaded publication PDFs, and I could not find enough relevant evidence for that question.",
+      answer: OUT_OF_SCOPE_ANSWER,
       citations: []
     });
     return;
@@ -128,8 +148,11 @@ app.post("/api/chat", async (req, res) => {
 
   const systemPrompt =
     "You are a research assistant for Samantha Weber's publication website. " +
-    "Answer only from the retrieved context. If context is insufficient, say you do not know. " +
-    "Do not use outside knowledge. Be concise and factual. When relevant, refer to citations as [1], [2], etc.";
+    "Answer only from the retrieved context. Do not use outside knowledge. " +
+    "If the context is insufficient or the question is outside these papers, respond exactly with: " +
+    `"${OUT_OF_SCOPE_ANSWER}" ` +
+    "Do not mention 'retrieved context' in the final answer. " +
+    "Be concise and factual. When relevant, refer to citations as [1], [2], etc.";
 
   const userPrompt = [
     "Question:",
@@ -154,7 +177,10 @@ app.post("/api/chat", async (req, res) => {
       temperature: 0.2
     });
 
-    const answer = (result.output_text || "").trim();
+    const rawAnswer = (result.output_text || "").trim();
+    const answer = looksLikeInsufficientContextAnswer(rawAnswer)
+      ? OUT_OF_SCOPE_ANSWER
+      : rawAnswer;
 
     res.json({
       answer:
