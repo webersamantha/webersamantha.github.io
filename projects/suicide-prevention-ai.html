@@ -47,7 +47,9 @@
         <nav class="project-anchors" aria-label="Project sections">
           <a href="#intro">Context</a>
           <a href="#collaboration">Collaboration</a>
-          <a href="#findings">Findings</a>
+          <a href="#claim1">Claim 1</a>
+          <a href="#claim2">Claim 2</a>
+          <a href="#claim3">Claim 3</a>
           <a href="#resources">Resources</a>
         </nav>
 
@@ -98,18 +100,18 @@
           </article>
         </section>
 
-        <section id="findings" class="story-grid">
+        <section id="claim1" class="story-grid">
           <article>
-            <h2>3. What the Paper Showed</h2>
+            <h2>3. Claim 1: Suicide Risk Detection Is Inherently Uncertain</h2>
             <p>
               Using 200 real-world conversation segments from a deployed
               mental-health chatbot, annotated independently by five clinical
               experts, we tested five prompt-based detection variants with
-              increasing sensitivity. The key result was not that one model
-              "solved" suicide-risk detection, but that near-zero-miss
-              detection is technically feasible in real time if the problem is
-              treated as a safety architecture rather than a pure prediction
-              benchmark.
+              increasing sensitivity. The starting point of the paper is that
+              suicide- and crisis-risk detection does not have a clean ground
+              truth. Even trained clinicians disagree on borderline cases, which
+              means model errors cannot simply be interpreted as model failure.
+              Risk detection is therefore inherently uncertain.
             </p>
 
             <div class="metric-grid">
@@ -137,22 +139,93 @@
           </article>
 
           <article>
-            <h2>Core Takeaway</h2>
+            <figure class="project-figure embedded-figure">
+              <img
+                src="Suicide-prevention/auc-curve.png"
+                alt="AUC curve for suicide- and crisis-risk detection variants."
+                loading="lazy"
+              />
+              <figcaption>
+                The detection task can be quantified, but the paper shows that
+                performance must be interpreted in the context of uncertain
+                clinical labels rather than as a clean binary truth problem.
+              </figcaption>
+            </figure>
+          </article>
+        </section>
+
+        <section id="claim2" class="story-grid">
+          <article>
+            <h2>4. Claim 2: Errors Cannot Be Eliminated, but Sensitivity Can Be Calibrated</h2>
             <p>
-              The most important insight is conceptual: suicide- and crisis-risk
-              detection in conversational AI should be treated as an online,
-              uncertainty-aware safety problem, not as a conventional accuracy
-              benchmark. In practice, that means architectural separation:
-              conservative risk monitoring runs independently of the
-              conversational model, so supportive engagement can continue while
-              safety constraints tighten when necessary.
+              The key operational finding was that prompt-based sensitivity
+              calibration changes the balance between false negatives and false
+              positives in a systematic way. As sensitivity increased, the
+              false-negative rate dropped monotonically from 87% to 0%, while
+              false positives rose accordingly. In other words, the system
+              cannot remove uncertainty, but it can be tuned to behave
+              conservatively when safety matters most.
+            </p>
+          </article>
+
+          <article>
+            <figure class="project-figure embedded-figure">
+              <img
+                src="Suicide-prevention/false-positive-false-negative-tradeoff.png"
+                alt="Trade-off between false positives and false negatives across detection sensitivity settings."
+                loading="lazy"
+              />
+              <figcaption>
+                The central operational result: safety-oriented calibration can
+                drive recall toward near-zero-miss detection, but only by
+                accepting higher false-positive rates.
+              </figcaption>
+            </figure>
+          </article>
+        </section>
+
+        <section id="claim3" class="story-grid">
+          <article>
+            <h2>5. Claim 3: Safety Is Not a Classification Task</h2>
+            <p>
+              The most important conclusion of the paper is architectural.
+              Suicide- and crisis-risk detection in conversational AI should be
+              treated as an online, uncertainty-aware safety problem, not as a
+              conventional accuracy benchmark. This is why the project proposes
+              an emergency mode in which conservative risk detection operates
+              independently from the conversational model. Supportive dialogue
+              can continue, but under a different safety regime.
+            </p>
+          </article>
+
+          <article>
+            <figure class="project-figure embedded-figure">
+              <img
+                src="Suicide-prevention/emergency-mode-design.png"
+                alt="Emergency mode design for uncertainty-aware risk detection in mental-health chatbots."
+                loading="lazy"
+              />
+              <figcaption>
+                Emergency mode design: rather than relying on one model to both
+                converse and judge risk, safety monitoring is separated and made
+                deliberately conservative.
+              </figcaption>
+            </figure>
+          </article>
+
+          <article>
+            <p>
+              That shift is the core message of the project: move away from
+              accuracy-based performance metrics alone and toward a framework
+              that accepts uncertainty, prioritizes safety, and is designed for
+              real deployment in mental-health systems.
             </p>
           </article>
         </section>
 
         <section id="resources" class="story-grid">
           <article>
-            <h2>4. Project Resources</h2>
+            <h2>6. Project Resources</h2>
             <ul class="project-resource-list">
               <li>
                 <a href="../publications/suicide-risk-detection-2026.pdf" target="_blank" rel="noopener noreferrer">
