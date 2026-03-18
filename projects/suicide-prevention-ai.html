@@ -6,7 +6,7 @@
     <title>Suicide Prevention and AI | Samantha Weber</title>
     <meta
       name="description"
-      content="Project page for suicide prevention and AI work by Samantha Weber."
+      content="Project page for suicide- and crisis-risk detection research in collaboration with Sonia Health."
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -23,6 +23,7 @@
       <a class="brand" href="../index.html#home">SW</a>
       <nav>
         <a href="../index.html#projects">All Projects</a>
+        <a href="../index.html#publications">Publications</a>
         <a href="../index.html#contact">Contact</a>
       </nav>
     </header>
@@ -32,13 +33,140 @@
         <p class="eyebrow">Featured Project 02</p>
         <h1>Suicide Prevention and AI</h1>
         <p class="lead">
-          Project page scaffold created. Full case study content will be added
-          in the next iteration.
+          This project focused on one practical question: how can LLM-based
+          mental-health chatbots detect suicide- and crisis-risk in real time
+          without relying on unrealistic assumptions about perfect certainty?
         </p>
         <div class="project-meta">
-          <span class="project-pill">Status: In Preparation</span>
-          <span class="project-pill">Domain: Digital Mental Health</span>
+          <span class="project-pill">Status: Research Collaboration</span>
+          <span class="project-pill">Domain: Suicide Prevention</span>
+          <span class="project-pill">Focus: Real-Time Crisis Detection</span>
+          <span class="project-pill">Setting: Mental Health Chatbots</span>
         </div>
+
+        <nav class="project-anchors" aria-label="Project sections">
+          <a href="#intro">Context</a>
+          <a href="#collaboration">Collaboration</a>
+          <a href="#findings">Findings</a>
+          <a href="#resources">Resources</a>
+        </nav>
+
+        <section id="intro" class="story-grid">
+          <article>
+            <h2>1. The Problem</h2>
+            <p>
+              LLMs are increasingly used in mental-health chatbots, especially
+              in systems designed to provide low-threshold support at scale. But
+              suicide- and crisis-risk detection is not a normal classification
+              task. There is no perfect ground truth, clinician disagreement is
+              substantial, and the real operational problem is not abstract
+              accuracy, but whether a risky situation is missed in real time.
+            </p>
+          </article>
+          <article>
+            <p>
+              This project reframed the problem accordingly: instead of asking
+              whether a model is simply "accurate," we asked how a chatbot can
+              monitor crisis risk safely under uncertainty, with a strong bias
+              toward not missing dangerous cases.
+            </p>
+          </article>
+        </section>
+
+        <section id="collaboration" class="story-grid">
+          <article>
+            <h2>2. Collaboration with Sonia Health</h2>
+            <p>
+              This work emerged from a collaboration between our academic team
+              and <a href="https://www.soniahealth.com" target="_blank" rel="noopener noreferrer">Sonia Health</a>,
+              a US-based mental-health technology company. Sonia were interested
+              in clinical expertise around suicide- and crisis-related content,
+              while we were interested in the real-world deployment challenges
+              of conversational AI in mental-health support.
+            </p>
+          </article>
+          <article>
+            <p>
+              As a wellness-oriented product operating in the context of the US
+              mental-health care crisis, Sonia faced a concrete safety problem:
+              users might mention suicidal ideation or acute crisis in the
+              middle of otherwise supportive conversations. We therefore worked
+              together on a separate LLM-based risk-detection layer that could
+              monitor conversations conservatively and trigger an operational
+              emergency mode when needed.
+            </p>
+          </article>
+        </section>
+
+        <section id="findings" class="story-grid">
+          <article>
+            <h2>3. What the Paper Showed</h2>
+            <p>
+              Using 200 real-world conversation segments from a deployed
+              mental-health chatbot, annotated independently by five clinical
+              experts, we tested five prompt-based detection variants with
+              increasing sensitivity. The key result was not that one model
+              "solved" suicide-risk detection, but that near-zero-miss
+              detection is technically feasible in real time if the problem is
+              treated as a safety architecture rather than a pure prediction
+              benchmark.
+            </p>
+
+            <div class="metric-grid">
+              <div class="metric-card">
+                <span class="metric-label">Dataset</span>
+                <span class="metric-value">200</span>
+                <span class="metric-note">Real-world chatbot conversation segments with clinician labels</span>
+              </div>
+              <div class="metric-card">
+                <span class="metric-label">Clinical review</span>
+                <span class="metric-value">5 experts</span>
+                <span class="metric-note">Independent annotations for suicide- and crisis-related risk</span>
+              </div>
+              <div class="metric-card">
+                <span class="metric-label">Recall</span>
+                <span class="metric-value">98.9-100%</span>
+                <span class="metric-note">Near-zero-miss detection at the highest sensitivity settings</span>
+              </div>
+              <div class="metric-card">
+                <span class="metric-label">Latency</span>
+                <span class="metric-value">&lt; 1s</span>
+                <span class="metric-note">Feasible for real-time per-turn monitoring</span>
+              </div>
+            </div>
+          </article>
+
+          <article>
+            <h2>Core Takeaway</h2>
+            <p>
+              The most important insight is conceptual: suicide- and crisis-risk
+              detection in conversational AI should be treated as an online,
+              uncertainty-aware safety problem, not as a conventional accuracy
+              benchmark. In practice, that means architectural separation:
+              conservative risk monitoring runs independently of the
+              conversational model, so supportive engagement can continue while
+              safety constraints tighten when necessary.
+            </p>
+          </article>
+        </section>
+
+        <section id="resources" class="story-grid">
+          <article>
+            <h2>4. Project Resources</h2>
+            <ul class="project-resource-list">
+              <li>
+                <a href="../publications/suicide-risk-detection-2026.pdf" target="_blank" rel="noopener noreferrer">
+                  Suicide- and crisis-risk detection using large language models in mental-health chatbots
+                </a>
+              </li>
+              <li>
+                <a href="https://www.soniahealth.com" target="_blank" rel="noopener noreferrer">
+                  Sonia Health
+                </a>
+              </li>
+            </ul>
+          </article>
+        </section>
       </article>
     </main>
 
